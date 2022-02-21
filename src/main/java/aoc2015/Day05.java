@@ -16,7 +16,6 @@
 //  dvszwmarrgswjxmb is naughty because it contains only one vowel.
 // 
 // How many strings are nice?
-// 238
 
 
 //  --- Part Two ---
@@ -38,7 +37,6 @@
 //  ieodomkazucvgmuy is naughty because it has a repeating letter with one between (odo), but no pair that appears twice.
 // 
 // How many strings are nice under these new rules?
-// 69
 
 package aoc2015;
 
@@ -61,8 +59,8 @@ public class Day05 {
 				count1 = isStringNice(line) ? count1 + 1 : count1;
 				count2 = isStringNiceBetterModel(line) ? count2 + 1 : count2;
 			}
-			System.out.println("Nice strings (old rules): " + count1);
-			System.out.println("Nice strings (new rules): " + count2);
+			System.out.println("Part 1: " + count1);
+			System.out.println("Part 2: " + count2);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
