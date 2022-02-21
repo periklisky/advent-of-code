@@ -26,7 +26,7 @@ import utils.Utils;
 
 
 public class Day02_part2 {
-	private static final String INPUT_NAME = "input_day2.txt";
+	private static final String INPUT_NAME = "aoc2015_day02.txt";
 	
 	public static void main(String[] args) {
 		BufferedReader reader = Utils.getBufferedReader(INPUT_NAME);

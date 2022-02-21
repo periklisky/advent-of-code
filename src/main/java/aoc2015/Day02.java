@@ -26,28 +26,31 @@ import java.util.Arrays;
 import utils.Utils;
 
 public class Day02 {
-	private static String INPUT_NAME = "input_day2.txt";
+	private static String INPUT_NAME = "aoc2015_day02.txt";
 
 	public static void main(String[] args) {
 		BufferedReader reader = Utils.getBufferedReader(INPUT_NAME);
 
 		int totalArea = 0;
 		int boxSurface;
+		int ribbon = 0;
 		String line;
 		try {
 			while ((line = reader.readLine()) != null) {
 				boxSurface = 0;
-				String[] tokens = line.split("x");
-				int l = Integer.valueOf(tokens[0]);
-				int w = Integer.valueOf(tokens[1]);
-				int h = Integer.valueOf(tokens[2]);
+				String dimensions[] = line.split("x");
+				int l = Integer.valueOf(dimensions[0]);
+				int w = Integer.valueOf(dimensions[1]);
+				int h = Integer.valueOf(dimensions[2]);
 				boxSurface = (2 * l * w) + (2 * w * h) + (2 * h * l) + calculateMinArea(l, w, h);
 				totalArea += boxSurface;
+				ribbon += boxSurface(l, w, h) + bow(l, w, h);
 			}
-			System.out.println(totalArea);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		System.out.println(totalArea);
+		System.out.println(ribbon);
 	}
 
 	private static int calculateMinArea(int l, int w, int h) {
@@ -55,4 +58,15 @@ public class Day02 {
 		Arrays.sort(arr);
 		return arr[0] * arr[1];
 	}
+	
+	private static int bow(int l, int w, int h) {
+		int array[] = {l, w, h};
+		Arrays.sort(array);
+		return (2*array[0] + 2*array[1]);
+	}
+
+	private static int boxSurface(int l, int w, int h) {
+		return l*w*h;
+	}
+
 }
