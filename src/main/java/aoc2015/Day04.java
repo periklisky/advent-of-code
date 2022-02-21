@@ -13,12 +13,10 @@
 // If your secret key is pqrstuv, the lowest number it combines with to make an MD5 hash starting with five zeroes is 1048970; that is, 
 // the MD5 hash of pqrstuv1048970 looks like 000006136ef....
 // Your puzzle input is ckczppom.
-// 117946
 
 
 // --- Part Two ---
 // Now find one that starts with six zeroes.
-// 3938038
 
 package aoc2015;
 
@@ -27,15 +25,15 @@ import java.security.NoSuchAlgorithmException;
 import utils.Utils;
 
 public class Day04 {
-	private static final String SECRET_KEY = "ckczppom";
+	private static final String SECRET_KEY = "yzbqklnj";
 	
 	public static void main(String[] args) throws NoSuchAlgorithmException {
 		int i = 0;
 		while (!Utils.getMD5Hash(SECRET_KEY + ++i).substring(0, 5).equals("00000"));		
-		System.out.println(i);
+		System.out.println("Part 1: " + i);
 
 		i = 0;
 		while (!Utils.getMD5Hash(SECRET_KEY + ++i).substring(0, 6).equals("000000"));
-		System.out.println(i);
+		System.out.println("Part 2: " + i);
 	}
 }
