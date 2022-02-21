@@ -24,34 +24,73 @@
 // ))) and )())()) both result in floor -3.
 //
 // To what floor do the instructions take Santa?
-// 232
+
+// --- Part Two ---
+// Now, given the same instructions, find the position of the first character that causes him to enter the basement (floor -1). 
+// The first character in the instructions has position 1, the second character has position 2, and so on.
+// 
+// For example:
+// 
+// ) causes him to enter the basement at character position 1.
+// ()()) causes him to enter the basement at character position 5.
+//
+// What is the position of the character that causes Santa to first enter the basement?
 
 package aoc2015;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 
 import utils.Utils;
 
 public class Day01 {
 	private static String INPUT_NAME = "aoc2015_day01.txt";
 
-	public static void main(String[] args) throws IOException, URISyntaxException {
+	public static void main(String[] args) {
 		BufferedReader reader = Utils.getBufferedReader(INPUT_NAME);
 
-		int floor = 0;
-		String line;
-		try {			
+		List<String> lines = new ArrayList<>();
+		try {
+			String line;
 			while ((line = reader.readLine()) != null) {
-				for(int i=0; i < line.length(); i++) {
-					if (line.charAt(i) == '(') floor++;
-					else if (line.charAt(i) == ')') floor--;
-				}
+				lines.add(line);
 			}
-			System.out.println(floor);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
+		int floor = 0;
+		int floor2 = 0;
+		int count = 0;
+		for (String line : lines) {
+			for (int i = 0; i < line.length(); i++) {
+				if (line.charAt(i) == '(')
+					floor++;
+				else if (line.charAt(i) == ')')
+					floor--;
+			}
+
+			for (int i = 0; i < line.length(); i++) {
+				switch (line.charAt(i)) {
+				case '(':
+					floor2++;
+					break;
+				case ')':
+					floor2--;
+					break;
+				default:
+					break;
+				}
+				if (floor2 == -1) {
+					System.out.println("Part 2: " + (count + i + 1));
+					break;
+				}
+			}
+			count += line.length();
+		}
+
+		System.out.println("Part 1: " + floor);
 	}
 }
