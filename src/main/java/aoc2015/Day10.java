@@ -14,25 +14,25 @@
 // 111221 becomes 312211 (three 1s, two 2s, and one 1).
 //
 // Starting with the digits in your puzzle input, apply this process 40 times. What is the length of the result?
-// 252594
 
 // --- Part Two ---
 // Neat, right? You might also enjoy hearing John Conway talking about this sequence (that's Conway of Conway's Game of Life fame).
 // 
 // Now, starting again with the digits in your puzzle input, apply this process 50 times. What is the length of the new result?
-// 3579328
 
 package aoc2015;
 
 public class Day10 {
-	private static final String INPUT_STRING = "1113222113";
+	private static final String INPUT_STRING = "3113322113";
 
 	public static void main(String[] args) {
-		final int numOfRepeats = 40;
-//		final int numOfRepeats = 50;
-
+		System.out.println("Part 1: " + gameOfLife(INPUT_STRING, 40));
+		System.out.println("Part 2: " + gameOfLife(INPUT_STRING, 50));
+	}
+	
+	private static int gameOfLife(String input, int repeats) {
 		String tempString = INPUT_STRING;
-		for (int i = 0; i < numOfRepeats; i++) {
+		for (int i = 0; i < repeats; i++) {
 			StringBuilder result = new StringBuilder();
 
 			for (int j = 0; j < tempString.length(); j++) {
@@ -48,6 +48,6 @@ public class Day10 {
 			}
 			tempString = result.toString();
 		}
-		System.out.println(tempString.length());
+		return tempString.length();
 	}
 }
