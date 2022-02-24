@@ -38,31 +38,54 @@ public class Day08 {
 	public static void main(String[] args) {
 		BufferedReader reader = Utils.getBufferedReader(INPUT_NAME);
 
-		int countCharactersOfCode = 0;
-		int countCharactersInMemory = 0;
+		int charactersOfCode = 0;
+		int charactersOfCode2 = 0;
+		int charactersInMemory = 0;
+		int charactersInMemory2 = 0;
 
-		String literal;
+		String literal = "";
 		try {
 			while ((literal = reader.readLine()) != null) {
-				countCharactersOfCode += literal.length();
+				StringBuilder newLiteral = new StringBuilder("\"");
 
 				for (int i = 0; i < literal.length(); i++) {
-					countCharactersInMemory++;
-					if (literal.charAt(i) != '\\')
-						continue;
-					else if (literal.charAt(i + 1) == '\"' || literal.charAt(i + 1) == '\\')
-						i += 1;
-					else if (literal.charAt(i + 1) == 'x')
-						i += 3;
+					switch (literal.charAt(i)) {
+					case '\"':
+						newLiteral.append("\\\"");
+						break;
+					case '\\':
+						newLiteral.append("\\\\");
+						break;
+					default:
+						newLiteral.append(literal.charAt(i));
+						break;
+					}
 				}
-				countCharactersInMemory -= 2;
+				newLiteral.append("\"");
 
-				literal.replaceAll(literal, literal);
+				charactersOfCode += literal.length();
+				charactersOfCode2 += newLiteral.length();
+
+				charactersInMemory = countCharactersInMemory(literal, charactersInMemory) - 2;
+				charactersInMemory2 = countCharactersInMemory(newLiteral.toString(), charactersInMemory2) - 2;
 			}
+			System.out.println(charactersOfCode - charactersInMemory);
+			System.out.println(charactersOfCode2 - charactersInMemory2);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println(countCharactersOfCode - countCharactersInMemory);
 	}
 
+	private static int countCharactersInMemory(String input, int chars) {
+		for (int i = 0; i < input.length(); i++) {
+			chars++;
+			if (input.charAt(i) != '\\')
+				continue;
+			else if (input.charAt(i + 1) == '\"' || input.charAt(i + 1) == '\\')
+				i += 1;
+			else if (input.charAt(i + 1) == 'x')
+				i += 3;
+		}
+		return chars;
+	}
 }
