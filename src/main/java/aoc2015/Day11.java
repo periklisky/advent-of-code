@@ -1,6 +1,7 @@
 package aoc2015;
 
 // --- Day 11: Corporate Policy ---
+
 // Santa's previous password expired, and he needs help choosing a new one.
 // 
 // To help him remember his new password after the old one expires, Santa has devised a method of coming up with a password 
@@ -28,24 +29,28 @@ package aoc2015;
 //	since i is not allowed.
 //
 // Given Santa's current password (your puzzle input), what should his next password be?
-// hepxxyzz
-
 
 // --- Part Two ---
 // Santa's password expired again. What's the next one?
-// heqaabcc
 
 public class Day11 {
-	private static final String INPUT_STRING = "hepxcrrq";
-//	private static final String INPUT_STRING = "hepxxzaa";
+	private static String password = "cqjxjnds";
 
 	public static void main(String[] args) {
-		String password = INPUT_STRING;
+		password = createValidPassword(password);
+		System.out.println("Part 1: " + password);
 
-		while(!isPasswordValid(password)) {
+		password = createNewPassword(password);
+
+		password = createValidPassword(password);
+		System.out.println("Part 2: " + password);
+	}
+
+	private static String createValidPassword(String password) {
+		while (!isPasswordValid(password)) {
 			password = createNewPassword(password);
 		}
-		System.out.println(password);
+		return password;
 	}
 	
 	private static String createNewPassword(String password) {
@@ -53,47 +58,50 @@ public class Day11 {
 		int i = password.length() - 1;
 
 		pass[i]++;
-		
-		while ((int)pass[i] == 123) { // first ASCII after 'z'
+
+		while ((int) pass[i] == 123) { // first ASCII after 'z'
 			pass[i] = 'a';
 			i--;
 			pass[i]++;
 		}
-		
+
 		return String.valueOf(pass);
 	}
 
 	public static boolean isPasswordValid(String password) {
-		if (!containsThreeConsecutiveLetters(password)) return false;
-		if (containsForbiddenLetter(password)) return false;
-		if (!containsTwoPais(password)) return false;
-		
+		if (!containsThreeConsecutiveLetters(password))
+			return false;
+		if (containsForbiddenLetter(password))
+			return false;
+		if (!containsTwoPais(password))
+			return false;
+
 		return true;
 	}
-	
+
 	private static boolean containsThreeConsecutiveLetters(String password) {
 		for (int i = 0; i < password.length() - 2; i++) {
-			if ((int)password.charAt(i) + 1 == (int)password.charAt(i+1)) {
-				if ((int)password.charAt(i+1) + 1 == (int)password.charAt(i+2)) {
+			if ((int) password.charAt(i) + 1 == (int) password.charAt(i + 1)) {
+				if ((int) password.charAt(i + 1) + 1 == (int) password.charAt(i + 2)) {
 					return true;
 				} else {
 					i++;
 				}
 			}
 		}
-		
+
 		return false;
 	}
 
 	private static boolean containsTwoPais(String password) {
 		int found = 0;
 		for (int i = 0; i < password.length() - 1; i++) {
-			if (password.charAt(i) == password.charAt(i+1)) {
+			if (password.charAt(i) == password.charAt(i + 1)) {
 				if (found == 0) {
 					found++;
 					i++;
-				}
-				else return true;
+				} else
+					return true;
 			}
 		}
 
@@ -101,9 +109,7 @@ public class Day11 {
 	}
 
 	public static boolean containsForbiddenLetter(String password) {
-		if (password.contains("i") || 
-				password.contains("o") || 
-				password.contains("l")) 
+		if (password.contains("i") || password.contains("o") || password.contains("l"))
 			return true;
 		return false;
 	}
